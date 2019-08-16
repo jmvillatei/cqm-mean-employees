@@ -1,6 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 
+
 const app = express();
 
 const { mongoose } = require('./database')
@@ -14,6 +15,7 @@ app.use(express.json());
 
 
 // Routes
+app.use('/api/employees',require('./routes/employees.routes'));
 
 // Initialization server
 
