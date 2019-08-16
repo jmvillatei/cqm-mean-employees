@@ -3,15 +3,15 @@ const router = express.Router();
 
 const employee = require('../controllers/employee.controller');
 
-router.get('/', employee.getEmployees);
+router.get('/employees', employee.getEmployees);
 
-router.post('/', employee.createEmployee);
+router.post('/employees', employee.createEmployee);
 
-router.get('/:id', employee.getEmployee);
+router.get('/employees/:id', employee.getEmployee);
 
-router.put('/:id', employee.editEmployee);
+router.put('/employees/:id', employee.editEmployee);
 
-router.delete('/:id', employee.deleteEmployee);
+router.delete('/employees/:id', employee.deleteEmployee);
 
 
 

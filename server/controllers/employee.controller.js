@@ -26,7 +26,15 @@ employeeCtrl.createEmployee = async (req, res) => {
 employeeCtrl.editEmployee = async (req, res) => {
     const { id } = req.params;
     const employee = {
-        first_name: req.body.first_name
+        email_company: req.body.email_company,
+        position: req.body.position,
+        workplace: req.body.workplace,
+        salary: req.body.salary,
+        comments: req.body.comments,
+        process: req.body.process,
+        on_vacation: req.body.on_vacation,
+        active: req.body.active
+
     };
     await Employee.findByIdAndUpdate(id, {$set: employee});
     res.json({status: 'Employee Update'});

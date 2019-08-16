@@ -15,7 +15,9 @@ app.use(express.json());
 
 
 // Routes
-app.use('/api/employees',require('./routes/employees.routes'));
+app.use('/api',require('./routes/employees.routes'));
+app.use('/api',require('./routes/users.routes'));
+
 
 // Initialization server
 
