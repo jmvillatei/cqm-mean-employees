@@ -6,7 +6,7 @@ const UserSchema = new Schema({
     surname: { type: String, required: true },
     sec_surname: { type: String, required: true },
     nickname: { type: String, required: true },
-    email_company: { type: String, required: false },
+    email_company: { type: String, required: true },
     active: { type: Boolean, default: false }
 });
 
