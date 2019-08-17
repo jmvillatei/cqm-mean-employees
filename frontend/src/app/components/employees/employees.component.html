@@ -1,0 +1,116 @@
+<div style="width: 80%; margin: 0 auto; margin-top: 3%">
+    <div class="row">
+        <div class="col s5">
+            <div class="card">
+                <div class="card-content">
+                    <form #employeeForm="ngForm" (ngSubmit)="addEmployee(employeeForm)">
+                        <input type="hidden" name="_id" #_id="ngModel"
+                            [(ngModel)]="employeeService.selectedEmployee._id">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input type="text" name="first_name" #first_name="ngModel"
+                                    [(ngModel)]="employeeService.selectedEmployee.first_name" placeholder="First Name"
+                                    required>
+                            </div>
+                            <div class="input-field col s12">
+                                <input type="text" name="surname" #surname="ngModel"
+                                    [(ngModel)]="employeeService.selectedEmployee.surname" placeholder="Surname">
+                            </div>
+                            <div class="input-field col s12">
+                                <input type="text" name="sec_surname" #sec_surname="ngModel"
+                                    [(ngModel)]="employeeService.selectedEmployee.sec_surname"
+                                    placeholder="Second Surname">
+                            </div>
+                            <div class="input-field col s12">
+                                <input type="date" name="birthdate" #birthdate="ngModel"
+                                    [(ngModel)]="employeeService.selectedEmployee.birthdate" placeholder="birthdate">
+                            </div>
+                            <div class="input-field col s12">
+                                <input type="email" name="email_company" #email_company="ngModel"
+                                    [(ngModel)]="employeeService.selectedEmployee.email_company"
+                                    placeholder="e-mail Company">
+                                <input type="email" name="email" #email="ngModel"
+                                    [(ngModel)]="employeeService.selectedEmployee.email" placeholder="e-mail">
+                            </div>
+                            <div class="input-field col s12">
+                                <input type="number" name="code" #code="ngModel"
+                                    [(ngModel)]="employeeService.selectedEmployee.code" placeholder="+Code">
+                                <input type="number" name="phone" #phone="ngModel"
+                                    [(ngModel)]="employeeService.selectedEmployee.phone" placeholder="Phone">
+                            </div>
+                            <div class="input-field col s12">
+                                <input type="text" name="position" #position="ngModel"
+                                    [(ngModel)]="employeeService.selectedEmployee.position" placeholder="Position">
+                            </div>
+                            <div class="input-field col s12">
+                                <input type="text" name="workplace" #workplace="ngModel"
+                                    [(ngModel)]="employeeService.selectedEmployee.workplace" placeholder="Workplace">
+                            </div>
+                            <div class="input-field col s12">
+                                <input type="number" name="salary" #salary="ngModel"
+                                    [(ngModel)]="employeeService.selectedEmployee.salary" placeholder="Salary">
+                            </div>
+                            <div class="input-field col s12">
+                                <input type="text" name="contract" #contract="ngModel"
+                                    [(ngModel)]="employeeService.selectedEmployee.contract" placeholder="Link Contract">
+                            </div>
+                            <div class="input-field col s12">
+                                <textarea name="comments" #comments="ngModel"
+                                    [(ngModel)]="employeeService.selectedEmployee.comments" cols="30" rows="10"
+                                    placeholder="Comments"></textarea>
+
+                            </div>
+                            <div class="input-field col s12">
+                                <input type="text" name="process" #process="ngModel"
+                                    [(ngModel)]="employeeService.selectedEmployee.process" placeholder="Process">
+                            </div>
+
+                            <div class="card-action">
+                                <div class="input-field col s12">
+                                    <button class="btn right blue" style="margin-left: 5px">Save</button>
+                                    <button class="btn right red" (click)="resetForm(employeeForm)">Clean</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col s7">
+            <table class="highlight striped ">
+                <thead>
+                    <th>First Name</th>
+                    <th>Surnames</th>
+
+                    <th>e-mail Company</th>
+
+                    <th>Process</th>
+                    <th>Active</th>
+                    <th>Operations</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let employee of employeeService.employees">
+                        <td>{{ employee.first_name }}</td>
+                        <td>{{ employee.surname }} {{ employee.sec_surname }}</td>
+                        <td>{{ employee.email_company }}</td>
+                        <td>{{ employee.process }}</td>
+                        <td>{{ employee.active }}</td>
+
+                        <td>
+                            <div>
+                                <button class="btn  green" style="margin-left: 5px" (click)="viewEmployee(employee)"><i
+                                        class="material-icons">pageview</i></button>
+                                <button class="btn  blue" style="margin-left: 5px" (click)="editEmployee(employee)"><i
+                                        class="material-icons">edit</i></button>
+                                <button class="btn  red" style="margin-left: 5px" (click)="deleteEmployee(employee)"><i
+                                        class="material-icons">delete</i></button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
