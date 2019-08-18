@@ -16,6 +16,7 @@ employeeCtrl.getEmployee = async (req, res) => {
 }
 
 employeeCtrl.createEmployee = async (req, res) => {
+    
     const employee = new Employee(req.body);
     await employee.save();
     res.json({

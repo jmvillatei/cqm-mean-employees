@@ -24,10 +24,10 @@ export class EmployeeService {
   }
 
   editEmployee(employee: Employee){
-    return this.http.put(this.URL_API + `/$(emplyee._id)`, employee);
+    return this.http.put(this.URL_API + "/" + employee._id, employee);
   }
 
   deleteEmployee(_id: string){
-    return this.http.delete(this.URL_API + `/$(_id)`);
+    return this.http.delete(this.URL_API + "/" + _id);
   }
 }

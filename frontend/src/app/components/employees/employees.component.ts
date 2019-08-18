@@ -14,35 +14,57 @@ declare var M: any;
 })
 export class EmployeesComponent implements OnInit {
 
-  constructor(private employeeService: EmployeeService) { }
+  constructor(
+    private employeeService: EmployeeService
+    ) { }
 
   ngOnInit() {
     this.getEmployees();
   }
 
-  getEmployees(){
+
+  getEmployees() {
     this.employeeService.getEmployees()
-    .subscribe(res => {
-      this.employeeService.employees = res as Employee[];
-      console.log(res);
-    });
-  }
-
-  addEmployee(form: NgForm){
-    this.employeeService.createEmployee(form.value)
       .subscribe(res => {
-        this.resetForm(form);
-        M.toast({html: 'Employee Created Successfuly', classes: 'rounded'});
-        this.getEmployees();
-      })
+        this.employeeService.employees = res as Employee[];
+      });
   }
 
-  editEmployee(employee: Employee){
+  addEmployee(form: NgForm) {
+
+
+    if (form.value._id != "") {
+      this.employeeService.editEmployee(form.value)
+        .subscribe(res => {
+          this.resetForm(form);
+          M.toast({ html: 'Employee Updated Successfuly', classes: 'green' });
+          this.getEmployees();
+        });
+    } else {
+      delete form.value._id;
+      this.employeeService.createEmployee(form.value)
+        .subscribe(res => {
+          this.resetForm(form);
+          M.toast({ html: 'Employee Created Successfuly', classes: 'green' });
+          this.getEmployees();
+        })
+    }
+  }
+
+  editEmployee(employee: Employee) {
     this.employeeService.selectedEmployee = employee;
   }
 
-  resetForm(form?: NgForm){
-    if(form){
+  deleteEmployee(_id: string) {
+    this.employeeService.deleteEmployee(_id)
+      .subscribe(res => {
+        M.toast({ html: 'Employee Deleted Successfuly', classes: 'green' });
+        this.getEmployees();
+      });
+  }
+
+  resetForm(form?: NgForm) {
+    if (form) {
       form.reset();
       this.employeeService.selectedEmployee = new Employee();
     }
