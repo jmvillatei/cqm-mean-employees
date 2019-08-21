@@ -1,9 +1,20 @@
-<div style="width: 80%; margin: 0 auto; margin-top: 3%">
-    <div class="row">
-        <div class="col s5">
-            <div class="card">
+<div style="width: 80%; margin: 0 auto; margin-top: 3%; padding: 20px">
+    <mat-accordion class="example-headers-align">
+        <mat-expansion-panel class="panel-create" [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <button mat-raised-button color="primary">Create <mat-icon aria-hidden="false" aria-label="Example home icon">add</mat-icon>
+                    </button>
+                </mat-panel-title>
+                <mat-panel-description>
+                    You need register other employee?
+                    <mat-icon>account_circle</mat-icon>
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <div class="card ">
                 <div class="card-content">
-                    <form #employeeForm="ngForm" (ngSubmit)="addEmployee(employeeForm)">
+                    <form #employeeForm="ngForm" (ngSubmit)="addEmployee(employeeForm, panelOpenState)">
                         <input type="hidden" name="_id" #_id="ngModel"
                             [(ngModel)]="employeeService.selectedEmployee._id">
                         <div class="row">
@@ -76,8 +87,25 @@
                     </form>
                 </div>
             </div>
-        </div>
-        <div class="col s7">
+
+
+            <mat-action-row>
+                <button mat-button color="primary" (click)="nextStep()">Next</button>
+            </mat-action-row>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Employees
+                </mat-panel-title>
+                <mat-panel-description>
+                    Look all employees
+                    <mat-icon>map</mat-icon>
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+
+
             <table class="highlight striped ">
                 <thead>
                     <th>First Name</th>
@@ -110,7 +138,17 @@
                     </tr>
                 </tbody>
             </table>
-        </div>
 
-    </div>
+
+            <mat-action-row>
+                <button mat-button color="warn" (click)="prevStep()">Previous</button>
+                <button mat-button color="primary" (click)="nextStep()">End</button>
+            </mat-action-row>
+        </mat-expansion-panel>
+
+    </mat-accordion>
+
+
+
+
 </div>

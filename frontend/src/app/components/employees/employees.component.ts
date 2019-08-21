@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SystemJsNgModuleLoader } from '@angular/core';
 
 import { EmployeeService } from '../../services/employee.service';
 import { NgForm } from '@angular/forms';
 import { Employee } from 'src/app/models/employee';
+
 
 declare var M: any;
 
@@ -13,13 +14,26 @@ declare var M: any;
   providers: [EmployeeService]
 })
 export class EmployeesComponent implements OnInit {
-
+  step = 1;
   constructor(
-    private employeeService: EmployeeService
-    ) { }
+    private employeeService: EmployeeService) { }
 
   ngOnInit() {
     this.getEmployees();
+  }
+
+  
+
+  setStep(index: number) {
+    this.step = index;
+  }
+
+  nextStep() {
+    this.step++;
+  }
+
+  prevStep() {
+    this.step--;
   }
 
 
@@ -32,11 +46,10 @@ export class EmployeesComponent implements OnInit {
 
   addEmployee(form: NgForm) {
 
-
     if (form.value._id != "") {
       this.employeeService.editEmployee(form.value)
         .subscribe(res => {
-          this.resetForm(form);
+          this.resetForm(form);          
           M.toast({ html: 'Employee Updated Successfuly', classes: 'green' });
           this.getEmployees();
         });
@@ -49,10 +62,12 @@ export class EmployeesComponent implements OnInit {
           this.getEmployees();
         })
     }
+    this.step++;
   }
 
   editEmployee(employee: Employee) {
     this.employeeService.selectedEmployee = employee;
+    this.step = 0;
   }
 
   deleteEmployee(_id: string) {

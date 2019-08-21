@@ -3,6 +3,11 @@ import { NgModule } from '@angular/core';
 
 import { FormsModule } from '@angular/forms';
 
+// animations
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+// material
+import { MaterialComponentModule} from './material.component'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,13 +17,15 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
-    EmployeesComponent
+    EmployeesComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MaterialComponentModule
     
   ],
   providers: [HttpClientModule],

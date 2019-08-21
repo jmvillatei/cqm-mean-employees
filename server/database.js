@@ -11,7 +11,7 @@ mongoose.connect(URI, {
         console.log('Base conectada')
     })
     .catch(function (err) {
-        console.log('Error, BD no conectada')
+        console.log('Error, BD no conectada');
     });
 
 module.exports = mongoose;
