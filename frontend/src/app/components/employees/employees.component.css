@@ -12,6 +12,52 @@ mat-form-field {
   margin-right: 12px;
 }
 
-.panel-create{
-  background-color: rgba(0, 140, 255, 0.377);
+
+
+.example-full-width {
+  width: 100%;
 }
+
+.panel-create{
+  background-color: rgba(29, 96, 151, 0.377);
+}
+
+.view-button-tooltip-green{
+  background: rgba(14, 82, 0, 0.6);
+}
+
+.view-button-tooltip-blue{
+  background: rgba(8, 3, 73, 0.6);
+}
+
+.view-button-tooltip-red{
+  background: rgba(100, 4, 4, 0.6);
+}
+
+
+td {
+  padding-right: 8px;
+}
+.customers {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  
+  width: 100%;
+  border-collapse: inherit;
+}
+
+.customers td, #customers th {
+  
+  padding: 8px;
+}
+
+.h1-form{
+  font-size: 30px;
+  letter-spacing: -1px;
+  color:#66abff;
+  text-transform: uppercase;
+  text-shadow: 1px 1px 0 #000;
+  margin: 10px 0 24px;
+  text-align: center;
+  line-height: 50px;
+}
+

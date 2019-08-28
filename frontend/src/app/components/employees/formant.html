@@ -1,0 +1,190 @@
+<form #employeeForm="ngForm" (ngSubmit)="addEmployee(employeeForm)">
+        <input type="hidden" name="_id" #_id="ngModel"
+            [(ngModel)]="employeeService.selectedEmployee._id">
+        <!-- ##### Personal information #### -->
+        <!-- data nama and surnames -->
+        <span class="badge">Personal Information of the Employee</span>
+        <table style="border-collapse: inherit;" class="customers">
+            <tr>
+                <td>
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>Employee's Full Name</mat-label>
+                        <input name="first_name" #first_name="ngModel"
+                            [(ngModel)]="employeeService.selectedEmployee.first_name" matInput
+                            placeholder="Full Name" [formControl]="first_name" required>
+                        <mat-icon matSuffix>mode_edit</mat-icon>
+                        <mat-error *ngIf="first_name.invalid">{{getErrorMessageAll(first_name)}}
+                        </mat-error>
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>Employee's Surname</mat-label>
+                        <input name="surname" #surname="ngModel"
+                            [(ngModel)]="employeeService.selectedEmployee.surname" matInput
+                            placeholder="Surname" [formControl]="apellido" required>
+                        <mat-icon matSuffix>mode_edit</mat-icon>
+                        <mat-error *ngIf="surname.invalid">{{getErrorMessageAll(surname)}}</mat-error>
+                    </mat-form-field>
+
+                </td>
+                <td>
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>Employee's Second Surname</mat-label>
+                        <input name="sec_surname" #sec_surname="ngModel"
+                            [(ngModel)]="employeeService.selectedEmployee.sec_surname" matInput
+                            placeholder="Second Surname" [formControl]="sec_surname" required>
+                        <mat-icon matSuffix>mode_edit</mat-icon>
+                        <mat-error *ngIf="sec_surname.invalid">{{getErrorMessageAll(sec_surname)}}
+                        </mat-error>
+                    </mat-form-field>
+                </td>
+            </tr>
+        </table>
+        <!-- data email -->
+        <table style="border-collapse: inherit;" class="customers">
+            <tr>
+                <td>
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>Employee's Email </mat-label>
+                        <input name="email" #email="ngModel"
+                            [(ngModel)]="employeeService.selectedEmployee.email" matInput
+                            placeholder="Enter your email" [formControl]="email" required>
+                        <mat-icon matSuffix>mail</mat-icon>
+                        <mat-error *ngIf="email.invalid">{{getErrorMessageEmail()}}</mat-error>
+                    </mat-form-field>
+
+                </td>
+                <td>
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>Employee's Telephone </mat-label>
+                        <span matPrefix>
+                            <input name="code" #code="ngModel"
+                                [(ngModel)]="employeeService.selectedEmployee.code" type="tel" matInput
+                                placeholder="+code">
+                            &nbsp;
+                        </span>
+                        <input name="phone" #phone="ngModel"
+                            [(ngModel)]="employeeService.selectedEmployee.phone" type="tel" matInput
+                            placeholder="Telephone">
+                        <mat-icon matSuffix>contact_phone</mat-icon>
+                        <mat-error *ngIf="phone.invalid">{{getErrorMessageAll(phone)}}</mat-error>
+                    </mat-form-field>
+                </td>
+            </tr>
+        </table>
+
+
+        <!-- data birthdate and age gender -->
+        <table style="border-collapse: inherit;" class="customers">
+            <tr>
+                <td>
+                    <mat-form-field appearance="outline">
+                        <input name="birthdate" #birthdate="ngModel"
+                        [(ngModel)]="employeeService.selectedEmployee.birthdate" matInput [matDatepicker]="dp3" placeholder="Your birthdate" disabled>
+                        <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+                        <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+                        <mat-error *ngIf="birthdate.invalid">{{getErrorMessageBirthdate()}}</mat-error>
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>Employee's Age</mat-label>
+                        <input name="age" #age="ngModel"
+                        [(ngModel)]="employeeService.selectedEmployee.age" matInput  disabled>
+                    </mat-form-field>
+
+                </td>
+                <td>
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>Employee's Gender</mat-label>
+                        <input name="gender" #gender="ngModel"
+                        [(ngModel)]="employeeService.selectedEmployee.gender" matInput placeholder="Gender">
+                        <mat-icon matSuffix>wc</mat-icon>
+                        <mat-error *ngIf="gender.invalid">{{getErrorMessageAll(gender)}}</mat-error>
+                    </mat-form-field>
+                </td>
+            </tr>
+        </table>
+        <!-- data residence -->
+        <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Employee's Residence Address</mat-label>
+            <input name="address" #address="ngModel"
+            [(ngModel)]="employeeService.selectedEmployee.address" matInput placeholder="Residence Address">
+            <mat-icon matSuffix>directions</mat-icon>
+            <mat-error *ngIf="address.invalid">{{getErrorMessageAll(address)}}</mat-error>
+        </mat-form-field>
+        <table style="border-collapse: inherit;" class="customers">
+            <tr>
+                <td>
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>Employee's City</mat-label>
+                        <input name="city" #city="ngModel"
+                        [(ngModel)]="employeeService.selectedEmployee.city" matInput placeholder="City">
+                        <mat-icon matSuffix>location_city</mat-icon>
+                        <mat-error *ngIf="city.invalid">{{getErrorMessageAll(city)}}</mat-error>
+                    </mat-form-field>
+
+                </td>
+                <td>
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>Employee's Country</mat-label>
+                        <input name="country" #country="ngModel"
+                        [(ngModel)]="employeeService.selectedEmployee.country" matInput placeholder="Country">
+                        <mat-icon matSuffix>map</mat-icon>
+                        <mat-error *ngIf="country.invalid">{{getErrorMessageAll(country)}}</mat-error>
+                    </mat-form-field>
+                </td>
+            </tr>
+        </table>
+        <!-- ##### contract information #### -->
+
+        <span class="badge">Contract information</span>
+        <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Company Email </mat-label>
+            <input name="email_company" #email_company="ngModel"
+            [(ngModel)]="employeeService.selectedEmployee.email_company" matInput disabled>
+            <mat-icon matSuffix>mail</mat-icon>
+        </mat-form-field>
+        <table style="border-collapse: inherit;" class="customers">
+            <tr>
+                <td>
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>Employee Position</mat-label>
+                        <input name="position" #position="ngModel"
+                        [(ngModel)]="employeeService.selectedEmployee.position" matInput placeholder="Country">
+                        <mat-icon matSuffix>map</mat-icon>
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>Workplace</mat-label>
+                        <input name="workplace" #workplace="ngModel"
+                        [(ngModel)]="employeeService.selectedEmployee.workplace" matInput placeholder="Country">
+                        <mat-icon matSuffix>map</mat-icon>
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Employee's salary</mat-label>
+                        <input name="salary" #salary="ngModel"
+                        [(ngModel)]="employeeService.selectedEmployee.workplace" matInput placeholder="Salary" type="number" class="example-right-align">
+                        <span matPrefix>$&nbsp;</span>
+                        <span matSuffix>.00 COP</span>
+                    </mat-form-field>
+                </td>
+            </tr>
+        </table>
+        <!-- ##### Additional comments #### -->
+
+        <span class="badge">Additional Comments</span>
+        <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Yours Comments</mat-label>
+            <textarea name="comments" #comments="ngModel"
+            [(ngModel)]="employeeService.selectedEmployee.comments"  matInput #message maxlength="256" placeholder="Message"></textarea>
+            <mat-hint align="start"><strong>Don't disclose personal info</strong> </mat-hint>
+            <mat-hint align="end">{{message.value.length}} / 256</mat-hint>
+        </mat-form-field>
+    </form>
+
+    
