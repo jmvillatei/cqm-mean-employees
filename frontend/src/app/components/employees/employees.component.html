@@ -63,9 +63,11 @@
                         <table style="border-collapse: inherit;" class="customers">
                             <tr>
                                 <td>
-                                    <mat-form-field (click)="createEmailC(first_name.value, surname.value, sec_surname.value)" class="example-full-width" appearance="outline">
+                                    <mat-form-field class="example-full-width" appearance="outline">
                                         <mat-label>Employee's Email </mat-label>
-                                        <input name="email" #email="ngModel"
+                                        <input
+                                            (keydown)="createEmailC(first_name.value, surname.value, sec_surname.value)"
+                                            name="email" #email="ngModel"
                                             [(ngModel)]="employeeService.selectedEmployee.email" matInput
                                             placeholder="Enter your email" required>
                                         <mat-icon matSuffix>mail</mat-icon>
@@ -78,12 +80,12 @@
 
 
                                 <td ALIGN=center ROWSPAN=2 COLSPAN=2>
-                                        
+
                                     <mat-form-field class="example-full-width" appearance="outline">
                                         <mat-label>Employee's Telephone </mat-label>
                                         <span matPrefix>+<input style="width: 50px" name="code" #code="ngModel"
-                                            [(ngModel)]="employeeService.selectedEmployee.code" matInput
-                                            placeholder="+" maxlength="4"> &nbsp;</span>
+                                                [(ngModel)]="employeeService.selectedEmployee.code" matInput
+                                                placeholder="+" maxlength="4"> &nbsp;</span>
                                         <input name="phone" #phone="ngModel"
                                             [(ngModel)]="employeeService.selectedEmployee.phone" type="tel" matInput
                                             placeholder="Telephone" required>
@@ -106,22 +108,33 @@
                                     <mat-form-field class="example-full-width" appearance="outline">
                                         <input name="birthdate" #birthdate="ngModel"
                                             [(ngModel)]="employeeService.selectedEmployee.birthdate" matInput
-                                            [matDatepicker]="dp3" placeholder="Your birthdate" >
+                                            [matDatepicker]="dp3" placeholder="Your birthdate">
                                         <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
                                         <mat-datepicker #dp3 disabled="false"></mat-datepicker>
 
                                     </mat-form-field>
                                 </td>
                                 <td>
-                                    <mat-form-field (click)="calculateAge(birthdate.value)"
-                                        class="example-full-width" appearance="outline">
+                                    <mat-form-field (click)="calculateAge(birthdate.value)" class="example-full-width"
+                                        appearance="outline">
                                         <mat-label>Employee's Age</mat-label>
-                                        <input name="age" #age="ngModel" [(ngModel)]="nAge" matInput >
+                                        <input name="age" #age="ngModel" [(ngModel)]="nAge" matInput>
 
                                     </mat-form-field>
                                 </td>
                                 <td>
                                     <mat-form-field class="example-full-width" appearance="outline">
+                                        <mat-label>Employee's Gender</mat-label>
+                                        <mat-select name="gender" #gender [(ngModel)]="employeeService.selectedEmployee.gender" [(value)]="selected">
+                                            <mat-option>None</mat-option>
+                                            <mat-option value="male">Male</mat-option>
+                                            <mat-option value="female">Female</mat-option>
+                                        </mat-select>
+                                        <mat-icon matSuffix>wc</mat-icon>
+                                    </mat-form-field>
+
+                                    <!-- 
+                                        <mat-form-field class="example-full-width" appearance="outline">
                                         <mat-label>Employee's Gender</mat-label>
                                         <input name="gender" #gender="ngModel"
                                             [(ngModel)]="employeeService.selectedEmployee.gender" matInput
@@ -129,6 +142,9 @@
                                         <mat-icon matSuffix>wc</mat-icon>
                                         <mat-error *ngIf="gender.invalid">{{getErrorMessageAll(gender)}}</mat-error>
                                     </mat-form-field>
+                                    
+                                    -->
+
                                 </td>
                             </tr>
                         </table>
@@ -144,21 +160,34 @@
                         <table style="border-collapse: inherit;" class="customers">
                             <tr>
                                 <td>
+
                                     <mat-form-field class="example-full-width" appearance="outline">
                                         <mat-label>Employee's City</mat-label>
-                                        <input name="city" #city="ngModel"
-                                            [(ngModel)]="employeeService.selectedEmployee.city" matInput
-                                            placeholder="City" required>
+                                        <input matInput placeholder="State" aria-label="State" [matAutocomplete]="auto"
+                                            [formControl]="stateCtrl" required>
+                                        <mat-autocomplete #auto="matAutocomplete">
+                                            <mat-option *ngFor="let ncity of filteredStates | async"
+                                                [value]="ncity.name">
+                                                <img class="example-option-img" aria-hidden [src]="ncity.flag"
+                                                    height="25">
+                                                <span>{{ncity.name}}</span> |
+                                                <small>Country: {{ncity.country}}</small>
+                                            </mat-option>
+                                        </mat-autocomplete>
                                         <mat-icon matSuffix>location_city</mat-icon>
-                                        <mat-error *ngIf="city.invalid">{{getErrorMessageAll(city)}}</mat-error>
                                     </mat-form-field>
+
+
+                                    <input type="hidden" name="city" #city="ngModel" [(ngModel)]="stateCtrl.value"
+                                        placeholder="City">
+
 
                                 </td>
                                 <td>
                                     <mat-form-field class="example-full-width" appearance="outline">
                                         <mat-label>Employee's Country</mat-label>
-                                        <input name="country" #country="ngModel"
-                                            [(ngModel)]="employeeService.selectedEmployee.country" matInput
+                                        <input (click)="getCountryByCity(stateCtrl.value)" name="country"
+                                            #country="ngModel" [(ngModel)]="countryEmployee" matInput
                                             placeholder="Country" required>
                                         <mat-icon matSuffix>map</mat-icon>
                                         <mat-error *ngIf="country.invalid">{{getErrorMessageAll(country)}}</mat-error>
@@ -171,8 +200,8 @@
                         <span class="badge">Contract information</span>
                         <mat-form-field class="example-full-width" appearance="outline">
                             <mat-label>Company Email </mat-label>
-                            <input name="email_company" #email_company="ngModel"
-                                [(ngModel)]="emailCompany" matInput >
+                            <input (click)="createEmailC(first_name.value, surname.value, sec_surname.value)"
+                                name="email_company" #email_company="ngModel" [(ngModel)]="emailCompany" matInput>
                             <mat-icon matSuffix>mail</mat-icon>
                         </mat-form-field>
                         <table style="border-collapse: inherit;" class="customers">

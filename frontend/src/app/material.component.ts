@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 
 // MATERIAL
-import { MatButtonModule, MatCheckboxModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material';
 import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -12,24 +12,12 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatDatepickerModule} from '@angular/material/datepicker'; 
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatChipsModule} from '@angular/material/chips'; 
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
     imports: [MatButtonModule,
-        MatCheckboxModule,
-        MatIconModule,
-        MatFormFieldModule,
-        MatExpansionModule,
-        MatTooltipModule,
-        MatInputModule,
-        MatStepperModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MatDatepickerModule,
-        MatNativeDateModule,
-        MatChipsModule
-    ],
-    exports: [MatButtonModule,
-        MatCheckboxModule,
+        MatSelectModule,
         MatIconModule,
         MatFormFieldModule,
         MatExpansionModule,
@@ -41,6 +29,22 @@ import {MatChipsModule} from '@angular/material/chips';
         MatDatepickerModule,
         MatNativeDateModule,
         MatChipsModule,
+        MatAutocompleteModule
+    ],
+    exports: [MatButtonModule,
+        MatSelectModule,
+        MatIconModule,
+        MatFormFieldModule,
+        MatExpansionModule,
+        MatTooltipModule,
+        MatInputModule,
+        MatStepperModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatChipsModule,
+        MatAutocompleteModule
     ],
 })
 export class MaterialComponentModule {

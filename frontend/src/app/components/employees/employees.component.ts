@@ -5,9 +5,17 @@ import { NgForm, FormControl, Validators } from '@angular/forms';
 import { Employee } from 'src/app/models/employee';
 
 import * as moment from 'moment';
+import { Observable } from 'rxjs';
+import { map, startWith, flatMap } from 'rxjs/operators';
 
 
 declare var M: any;
+
+export interface City {
+  flag: string;
+  name: string;
+  country: string;
+}
 
 @Component({
   selector: 'app-employees',
@@ -21,19 +29,70 @@ export class EmployeesComponent implements OnInit {
   cont = 0;
   nAge = 0;
   emailCompany = "";
+  countryEmployee = "";
 
   email = new FormControl('', [Validators.required, Validators.email]);
-  
-  //birthdate = new FormControl('', [Validators.required]);
+
+  stateCtrl = new FormControl();
+  filteredStates: Observable<City[]>;
+
+  cities: City[] = [
+    {
+      name: 'Bogota',
+      country: 'Colombia',
+      // https://commons.wikimedia.org/wiki/File:Flag_of_Arkansas.svg
+      flag: 'https://upload.wikimedia.org/wikipedia/commons/2/21/Flag_of_Colombia.svg'
+    },
+    {
+      name: 'Kolkata',
+      country: 'India',
+      // https://commons.wikimedia.org/wiki/File:Flag_of_California.svg
+      flag: 'https://upload.wikimedia.org/wikipedia/commons/4/41/Flag_of_India.svg'
+    },
+
+  ];
+
 
   constructor(
-    private employeeService: EmployeeService) { }
+    private employeeService: EmployeeService) {
+    this.filteredStates = this.stateCtrl.valueChanges
+      .pipe(
+        startWith(''),
+        map(city => city ? this._filterStates(city) : this.cities.slice())
+      );
+  }
+
+  private _filterStates(value: string): City[] {
+    const filterValue = value.toLowerCase();
+
+    return this.cities.filter(city => city.name.toLowerCase().indexOf(filterValue) === 0);
+  }
+
 
 
   ngOnInit() {
     this.getEmployees();
 
   }
+
+
+
+  getCountryByCity(city: string) {
+    if (city != null) {
+      const filterValue = city.toLowerCase();
+      const chooseCountry = this.cities.filter(city => city.name.toLowerCase().indexOf(filterValue) === 0);
+      if (chooseCountry.length != 0) {
+        this.countryEmployee = chooseCountry[0].country;
+      }
+    }else{
+      this.countryEmployee = "";
+      M.toast({ html: 'Please write a city', classes: 'red' });
+    }
+
+
+
+  }
+
 
   getErrorMessageAll(select: FormControl) {
     return select.hasError('required') ? 'You must enter a value' :
@@ -51,10 +110,11 @@ export class EmployeesComponent implements OnInit {
     name = "";
     for (let n of names) {
       if (n != " ") {
-        name=name+n[0];
+        name = name + n[0].toLowerCase();
       }
     }
-    this.emailCompany = name + surname + second[0]+"@consorcioqutubminar.com";
+    console.log(this.emailCompany);
+    this.emailCompany = name + surname.toLowerCase() + second[0] + "@consorcioqutubminar.com";
   }
 
   calculateAge(birthdate) {
