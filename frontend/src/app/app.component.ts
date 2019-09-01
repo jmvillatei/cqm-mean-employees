@@ -8,4 +8,10 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'frontend';
   panelOpenState = false;
+  clientHeight: number;
+
+  constructor() {
+    this.clientHeight = window.innerHeight; 
+ }
 }
+
