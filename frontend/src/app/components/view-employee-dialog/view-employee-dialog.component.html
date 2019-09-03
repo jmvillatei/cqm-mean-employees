@@ -1,0 +1,29 @@
+<mat-card >
+  <mat-card-header class="card-info-employee">
+    <div mat-card-avatar class="perfil-header-image"></div>
+    <mat-card-title>{{data.first_name}} <b> {{data.surname}} {{data.sec_surname}}</b></mat-card-title>
+    <mat-card-subtitle >
+      <mat-chip-list aria-label="Fish selection">
+        <mat-chip>{{birthdate}}</mat-chip>
+        <mat-chip color="primary" selected>{{data.position}}</mat-chip>
+        <mat-chip color="accent" selected>{{data.workplace}}</mat-chip>
+      </mat-chip-list>
+    </mat-card-subtitle>
+  </mat-card-header>
+  <br>
+  
+  <mat-card-content class="card-content-background"> 
+    <p>
+      Personal e-mail: {{data.email}}<br>
+      Company e-mail: {{data.email_company}}<br>
+      {{data.phone}}
+      {{data.gender}}
+      {{data.residence}}
+      {{data.country}}
+      {{data.city}}
+    </p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button (click)="close()">Close</button>
+  </mat-card-actions>
+</mat-card>

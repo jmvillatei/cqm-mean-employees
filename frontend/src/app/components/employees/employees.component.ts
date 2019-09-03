@@ -3,10 +3,12 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { EmployeeService } from '../../services/employee.service';
 import { NgForm, FormControl, Validators } from '@angular/forms';
 import { Employee } from 'src/app/models/employee';
+import { ViewEmployeeDialogComponent } from 'src/app/components/view-employee-dialog/view-employee-dialog.component';
 
 import * as moment from 'moment';
-import { Observable } from 'rxjs';
+import { Observable, config } from 'rxjs';
 import { map, startWith, flatMap } from 'rxjs/operators';
+import { MatDialog } from '@angular/material';
 
 
 declare var M: any;
@@ -16,6 +18,7 @@ export interface City {
   name: string;
   country: string;
 }
+
 
 @Component({
   selector: 'app-employees',
@@ -33,7 +36,7 @@ export class EmployeesComponent implements OnInit {
 
   email = new FormControl('', [Validators.required, Validators.email]);
 
-  stateCtrl = new FormControl();
+  cityCtrl = new FormControl();
   filteredStates: Observable<City[]>;
 
   cities: City[] = [
@@ -54,8 +57,10 @@ export class EmployeesComponent implements OnInit {
 
 
   constructor(
-    private employeeService: EmployeeService) {
-    this.filteredStates = this.stateCtrl.valueChanges
+    private employeeService: EmployeeService,
+    public dialog: MatDialog
+  ) {
+    this.filteredStates = this.cityCtrl.valueChanges
       .pipe(
         startWith(''),
         map(city => city ? this._filterStates(city) : this.cities.slice())
@@ -68,15 +73,19 @@ export class EmployeesComponent implements OnInit {
     return this.cities.filter(city => city.name.toLowerCase().indexOf(filterValue) === 0);
   }
 
-
-
+  // function init
   ngOnInit() {
     this.getEmployees();
 
   }
 
+  // Open dialog View employee
+  openModalViewEmployee(employee){
+    const conf ={data: employee};
+    this.dialog.open(ViewEmployeeDialogComponent, conf,);
+  }
 
-
+  // Get country employee 
   getCountryByCity(city: string) {
     if (city != null) {
       const filterValue = city.toLowerCase();
@@ -84,39 +93,44 @@ export class EmployeesComponent implements OnInit {
       if (chooseCountry.length != 0) {
         this.countryEmployee = chooseCountry[0].country;
       }
-    }else{
+    } else {
       this.countryEmployee = "";
       M.toast({ html: 'Please write a city', classes: 'red' });
     }
-
-
-
   }
 
 
+  // Error message input required 
   getErrorMessageAll(select: FormControl) {
     return select.hasError('required') ? 'You must enter a value' :
       '';
   }
 
+  // Error message input email verify
   getErrorMessageEmail() {
     return this.email.hasError('required') ? 'You must enter a value' :
       this.email.hasError('email') ? 'Not a valid email' :
         '';
   }
 
+  // create email company
   createEmailC(name, surname, second) {
-    const names = name.split(" ");
-    name = "";
-    for (let n of names) {
-      if (n != " ") {
-        name = name + n[0].toLowerCase();
+    if (name != "" && surname != "" && second != "") {
+      const names = name.split(" ");
+      name = "";
+      for (let n of names) {
+        if (n != " ") {
+          name = name + n[0].toLowerCase();
+        }
       }
+      this.emailCompany = name + surname.toLowerCase() + second[0].toLowerCase() + "@consorcioqutubminar.com";
+    } else {
+      M.toast({ html: 'Fill the above required fields ', classes: 'red' });
     }
-    console.log(this.emailCompany);
-    this.emailCompany = name + surname.toLowerCase() + second[0] + "@consorcioqutubminar.com";
+
   }
 
+  //Calculate age employee
   calculateAge(birthdate) {
     this.nAge = Number(moment().format('YYYY')) - Number(moment(birthdate).format('YYYY'));
     const month = Number(moment().format('MM')) - Number(moment(birthdate).format('MM'));
@@ -126,6 +140,9 @@ export class EmployeesComponent implements OnInit {
     }
   }
 
+  // --
+  // expansion panel register new employee
+  // --
   setStep(index: number) {
     this.step = index;
   }
@@ -138,7 +155,19 @@ export class EmployeesComponent implements OnInit {
     this.step--;
   }
 
+  // reset form register new employee
+  resetForm(form?: NgForm) {
+    if (form) {
+      form.reset();
+      this.employeeService.selectedEmployee = new Employee();
+    }
+  }
 
+  //--
+  // function CRUD (create, edit, delete, consult)
+  //--
+
+  // Get employees
   getEmployees() {
     this.employeeService.getEmployees()
       .subscribe(res => {
@@ -146,6 +175,7 @@ export class EmployeesComponent implements OnInit {
       });
   }
 
+  // Create employee
   addEmployee(form: NgForm) {
 
     if (form.value._id != "") {
@@ -173,11 +203,13 @@ export class EmployeesComponent implements OnInit {
     }
   }
 
+  // Edit-update employee
   editEmployee(employee: Employee) {
     this.employeeService.editEmployees = employee;
     this.step = 0;
   }
 
+  // Delete employee
   deleteEmployee(_id: string) {
     this.employeeService.deleteEmployee(_id)
       .subscribe(res => {
@@ -186,11 +218,6 @@ export class EmployeesComponent implements OnInit {
       });
   }
 
-  resetForm(form?: NgForm) {
-    if (form) {
-      form.reset();
-      this.employeeService.selectedEmployee = new Employee();
-    }
-  }
+
 
 }

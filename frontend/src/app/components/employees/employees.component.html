@@ -125,7 +125,8 @@
                                 <td>
                                     <mat-form-field class="example-full-width" appearance="outline">
                                         <mat-label>Employee's Gender</mat-label>
-                                        <mat-select name="gender" #gender [(ngModel)]="employeeService.selectedEmployee.gender" [(value)]="selected">
+                                        <mat-select name="gender" #gender
+                                            [(ngModel)]="employeeService.selectedEmployee.gender" [(value)]="selected">
                                             <mat-option>None</mat-option>
                                             <mat-option value="male">Male</mat-option>
                                             <mat-option value="female">Female</mat-option>
@@ -163,8 +164,9 @@
 
                                     <mat-form-field class="example-full-width" appearance="outline">
                                         <mat-label>Employee's City</mat-label>
-                                        <input matInput placeholder="State" aria-label="State" [matAutocomplete]="auto"
-                                            [formControl]="stateCtrl" required>
+                                        <input (keydown)="getCountryByCity(cityCtrl.value)" matInput placeholder="State"
+                                            aria-label="State" [matAutocomplete]="auto" [formControl]="cityCtrl"
+                                            required>
                                         <mat-autocomplete #auto="matAutocomplete">
                                             <mat-option *ngFor="let ncity of filteredStates | async"
                                                 [value]="ncity.name">
@@ -178,7 +180,7 @@
                                     </mat-form-field>
 
 
-                                    <input type="hidden" name="city" #city="ngModel" [(ngModel)]="stateCtrl.value"
+                                    <input type="hidden" name="city" #city="ngModel" [(ngModel)]="cityCtrl.value"
                                         placeholder="City">
 
 
@@ -186,7 +188,7 @@
                                 <td>
                                     <mat-form-field class="example-full-width" appearance="outline">
                                         <mat-label>Employee's Country</mat-label>
-                                        <input (click)="getCountryByCity(stateCtrl.value)" name="country"
+                                        <input (click)="getCountryByCity(cityCtrl.value)" name="country"
                                             #country="ngModel" [(ngModel)]="countryEmployee" matInput
                                             placeholder="Country" required>
                                         <mat-icon matSuffix>map</mat-icon>
@@ -282,25 +284,29 @@
                     <th>First Name</th>
                     <th>Surnames</th>
 
-                    <th>e-mail Company</th>
+                    <th> e-mail Personal</th>
+                    <th>Company e-mail</th>
 
                     <th>Process</th>
                     <th>Active</th>
+                    <th>On Vacation</th>
                     <th>Operations</th>
                 </thead>
                 <tbody>
                     <tr *ngFor="let employee of employeeService.employees">
                         <td>{{ employee.first_name }}</td>
                         <td>{{ employee.surname }} {{ employee.sec_surname }}</td>
+                        <td>{{ employee.email }}</td>
                         <td>{{ employee.email_company }}</td>
                         <td>{{ employee.process }}</td>
                         <td>{{ employee.active }}</td>
+                        <td>{{ employee.on_vacation }}</td>
 
                         <td>
                             <div>
                                 <button matTooltip="Look at {{ employee.first_name }}."
                                     matTooltipClass="view-button-tooltip-green" class="btn  green"
-                                    style="margin-left: 5px" (click)="viewEmployee(employee)"><i
+                                    style="margin-left: 5px" (click)="openModalViewEmployee(employee)"><i
                                         class="material-icons">pageview</i></button>
                                 <button matTooltip="Edit to {{ employee.first_name }}."
                                     matTooltipClass="view-button-tooltip-blue" class="btn  blue"

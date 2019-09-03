@@ -1,0 +1,13 @@
+
+  
+  .perfil-header-image {
+    background-image: url('https://image.freepik.com/vector-gratis/perfil-avatar-hombre-icono-redondo_24640-14044.jpg');
+    background-size: cover;
+  }
+
+ .card-info-employee {
+  background: #466368;
+  background: linear-gradient(to right bottom, #001bde85, #46a2e8c4);
+  border-radius: 6px;
+  padding: 7px;
+}

@@ -14,6 +14,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import {MatChipsModule} from '@angular/material/chips'; 
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatSelectModule} from '@angular/material/select';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
     imports: [MatButtonModule,
@@ -29,7 +31,9 @@ import {MatSelectModule} from '@angular/material/select';
         MatDatepickerModule,
         MatNativeDateModule,
         MatChipsModule,
-        MatAutocompleteModule
+        MatAutocompleteModule,
+        MatDialogModule,
+        MatCardModule
     ],
     exports: [MatButtonModule,
         MatSelectModule,
@@ -44,7 +48,9 @@ import {MatSelectModule} from '@angular/material/select';
         MatDatepickerModule,
         MatNativeDateModule,
         MatChipsModule,
-        MatAutocompleteModule
+        MatAutocompleteModule,
+        MatDialogModule,
+        MatCardModule
     ],
 })
 export class MaterialComponentModule {

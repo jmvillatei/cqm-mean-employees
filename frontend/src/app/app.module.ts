@@ -14,12 +14,14 @@ import { AppComponent } from './app.component';
 import { EmployeesComponent } from './components/employees/employees.component';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { FooterComponent } from './components/footer/footer.component';
+import { ViewEmployeeDialogComponent } from './components/view-employee-dialog/view-employee-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     EmployeesComponent,
     FooterComponent,
+    ViewEmployeeDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,6 +33,7 @@ import { FooterComponent } from './components/footer/footer.component';
     
   ],
   providers: [HttpClientModule],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ViewEmployeeDialogComponent]
 })
 export class AppModule { }
