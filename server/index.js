@@ -3,7 +3,12 @@ const morgan = require('morgan');
 const cors = require('cors');
 const path = require('path');
 
+const os = require("os");
+const network = os.networkInterfaces();
+const urlHost = 'http://'+network['lo'][0]['address']+':4200';
 
+
+//const localhost = window.location.host;
 
 const app = express();
 
@@ -29,5 +34,7 @@ app.use(express.static(path.join(__dirname , '../frontend/dist/frontend')))
 // Initialization server
 
 app.listen(app.get('port'), () => {
+    console.log(network);
+    console.log(urlHost);
     console.log('Server on Port ' + app.get('port'));
 });
