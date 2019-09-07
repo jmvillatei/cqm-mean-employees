@@ -1,6 +1,8 @@
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
+const path = require('path');
+
 
 
 const app = express();
@@ -20,6 +22,9 @@ app.use(cors({origin: 'http://localhost:4200'}));
 app.use('/api',require('./routes/employees.routes'));
 app.use('/api',require('./routes/users.routes'));
 
+//Static files
+
+app.use(express.static(path.join(__dirname , '../frontend/dist/frontend')))
 
 // Initialization server
 
